@@ -4,7 +4,9 @@ Local Duka is a mobile application that provides users with a seamless shopping 
 
 ## Tech Stack
 Frontend: Flutter
+
 Backend:NodeJs
+
 Database:PostgreSQL
 ## API Documentation
 The backend exposes several endpoints for managing users, products, orders, and more. For detailed API documentation, refer to docs/api_documentation.md.
