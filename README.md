@@ -1,16 +1,18 @@
-# flutter_e_commerce
+# Local_Duka
 
-A new Flutter project.
+Local Duka is a mobile application that provides users with a seamless shopping experience for local stores. Built using Flutter for the mobile frontend, Node.js for the backend, and PostgreSQL as the database, the app aims to make shopping for essentials at neighborhood stores more accessible and efficient.
 
-## Getting Started
+## Tech Stack
+Frontend: Flutter
 
-This project is a starting point for a Flutter application.
+Backend:NodeJs
 
-A few resources to get you started if this is your first Flutter project:
+Database:PostgreSQL
+## API Documentation
+The backend exposes several endpoints for managing users, products, orders, and more. For detailed API documentation, refer to docs/api_documentation.md.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Contributing
+Contributions are welcome! Please submit a pull request or open an issue to discuss changes.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## License
+This project is licensed under the MIT License.
