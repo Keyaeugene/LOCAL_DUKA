@@ -1,5 +1,5 @@
 const express = require('express');
-const { Pool } = require('pg');  // Import Pool from pg
+const {Client} = require('pg');  
 //imports from other files
 const authRouter = require("./routes/auth");
 
@@ -8,12 +8,12 @@ const PORT = 3000;
 const app = express();
 
 // PostgreSQL connection configuration
-const pool = new Pool({
-    user: 'your_username',
+const client = new Client({
+    user: 'postgres',
     host: 'localhost',
-    database: 'your_database_name',
-    password: 'your_password',
-    port: 5432,  // default PostgreSQL port
+    database: 'postgres',
+    password: 'rootUser',
+    port: 5432, 
 });
 
 //middleware
@@ -21,17 +21,17 @@ app.use(express.json());  // Add this to parse JSON bodies
 app.use('/auth', authRouter);  // Add a prefix for auth routes
 
 //Test database connection
-pool.connect()
-    .then(() => {
+client.connect()
+    .then(() => { 
         console.log('Database connection successful');
     })
     .catch((e) => {
         console.log('Database connection error:', e);
     });
 
-app.listen(PORT,'0.0.0.0', () => {
+app.listen(PORT, () => {
     console.log(`Server connected at port ${PORT}`);
 });
 
 // Export pool for use in other files
-module.exports = pool;
+module.exports = client;
