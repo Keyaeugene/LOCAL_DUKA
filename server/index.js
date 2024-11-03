@@ -1,37 +1,46 @@
 const express = require('express');
-const {Client} = require('pg');  
-//imports from other files
+const User = require('./models/user');
 const authRouter = require("./routes/auth");
+const cors = require('cors');
 
-//INIT
-const PORT = 3000;
+
 const app = express();
+const PORT = process.env.PORT || 3000;
 
-// PostgreSQL connection configuration
-const client = new Client({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'postgres',
-    password: 'rootUser',
-    port: 5432, 
-});
+// Middleware
+app.use(cors());
+app.use(express.json()); 
+app.use(express.urlencoded({ extended: true }));
 
-//middleware
-app.use(express.json());  // Add this to parse JSON bodies
-app.use('/auth', authRouter);  // Add a prefix for auth routes
 
-//Test database connection
-client.connect()
-    .then(() => { 
+app.use('/auth', authRouter);
+
+
+async function startServer() {
+    try {
+        
+        await User.connect();
         console.log('Database connection successful');
-    })
-    .catch((e) => {
-        console.log('Database connection error:', e);
-    });
 
-app.listen(PORT, () => {
-    console.log(`Server connected at port ${PORT}`);
+        
+        app.listen(PORT, () => {
+            console.log(`Server running on port ${PORT}`);
+        });
+    } catch (error) {
+        console.error('Server startup error:', error);
+        process.exit(1);
+    }
+}
+
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ 
+        message: 'Something went wrong!',
+        error: process.env.NODE_ENV === 'production' ? {} : err.message 
+    });
 });
 
-// Export pool for use in other files
-module.exports = client;
+
+startServer();
+
+module.exports = app;
