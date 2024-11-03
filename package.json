@@ -3,6 +3,24 @@
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",
+    "express": "^4.21.1",
     "pg": "^8.13.1"
-  }
+  },
+  "name": "local_duka",
+  "version": "1.0.0",
+  "description": "Local Duka is a mobile application that provides users with a seamless shopping experience for local stores. Built using Flutter for the mobile frontend, Node.js for the backend, and PostgreSQL as the database, the app aims to make shopping for essentials at neighborhood stores more accessible and efficient.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
