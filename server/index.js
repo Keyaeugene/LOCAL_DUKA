@@ -2,6 +2,7 @@ const express = require('express');
 const User = require('./models/user');
 const authRouter = require("./routes/auth");
 const cors = require('cors');
+const prisma = require('./lib/prisma');
 
 
 const app = express();
@@ -19,7 +20,7 @@ app.use('/auth', authRouter);
 async function startServer() {
     try {
         
-        await User.connect();
+    
         console.log('Database connection successful');
 
         
