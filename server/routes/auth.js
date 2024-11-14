@@ -4,35 +4,40 @@ const bcryptjs = require('bcryptjs');
 
 const authRouter = express.Router();
 
-
 authRouter.post('/signup', async (req, res) => {
     try {
         const { name, email, password } = req.body;
 
-         if (!name || !email || !password) {
+        // Validate input
+        if (!name || !email || !password) {
             return res.status(400).json({ 
                 message: 'Name, email, and password are required' 
             });
         }
-        const existingUser = await User.findByEmail(email);
-        if (existingUser) {
+
+        // Check for existing user
+        const existingUser  = await User.findByEmail(email);
+        if (existingUser ) {
             return res.status(400).json({ 
-                message: 'User with this email already exists' 
+                message: 'User  with this email already exists' 
             });
         }
 
-    
-        const newUser = await User.createUser({ 
+        // Hash the password
+        const hashedPassword = await bcryptjs.hash(password, 10);
+
+        // Create a new user
+        const newUser  = await User.createUser ({ 
             name, 
             email, 
-            password 
+            password: hashedPassword // Use hashed password
         });
 
-    
-        const { password: userPassword, ...userResponse } = newUser;
+        // Remove sensitive information before sending response
+        const { password: userPassword, ...userResponse } = newUser ;
 
         res.status(201).json({
-            message: 'User created successfully',
+            message: 'User  created successfully',
             user: userResponse
         });
     } catch (error) {
@@ -48,7 +53,7 @@ authRouter.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        
+        // Find user by email
         const user = await User.findByEmail(email);
         if (!user) {
             return res.status(401).json({ 
@@ -56,7 +61,7 @@ authRouter.post('/login', async (req, res) => {
             });
         }
 
-        
+        // Check password
         const isMatch = await bcryptjs.compare(password, user.password);
         if (!isMatch) {
             return res.status(401).json({ 
