@@ -23,7 +23,7 @@ class UserModel {
         }
 
         const saltRounds = 10
-        const hashedPassword = await bcrypt.hash(userData.password, saltRounds)
+        const hashedPassword = await bcryptjs.hash(userData.password, saltRounds)
 
         try {
             return await prisma.user.create({

@@ -20,7 +20,6 @@ app.use('/auth', authRouter);
 async function startServer() {
     try {
         
-    
         console.log('Database connection successful');
 
         

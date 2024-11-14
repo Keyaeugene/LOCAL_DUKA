@@ -1,16 +1,19 @@
-const { Router } = require('express');
+const express = require('express');
+const User = require("../models/user");
+const bcryptjs = require('bcryptjs');
 
-const User = require("../models/user.js");
-const compare = require('bcrypt');
-
-const authRouter = Router();
+const authRouter = express.Router();
 
 
 authRouter.post('/signup', async (req, res) => {
     try {
         const { name, email, password } = req.body;
 
-        
+         if (!name || !email || !password) {
+            return res.status(400).json({ 
+                message: 'Name, email, and password are required' 
+            });
+        }
         const existingUser = await User.findByEmail(email);
         if (existingUser) {
             return res.status(400).json({ 
@@ -54,7 +57,7 @@ authRouter.post('/login', async (req, res) => {
         }
 
         
-        const isMatch = await compare(password, user.password);
+        const isMatch = await bcryptjs.compare(password, user.password);
         if (!isMatch) {
             return res.status(401).json({ 
                 message: 'Invalid email or password' 
