@@ -1,9 +1,12 @@
 const express = require('express');
 const User = require("../models/user");
 const bcryptjs = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const authRouter = express.Router();
+const JWT_SECRET = 'your_jwt_secret'; 
 
+// Signup Route
 authRouter.post('/signup', async (req, res) => {
     try {
         const { name, email, password } = req.body;
@@ -30,15 +33,19 @@ authRouter.post('/signup', async (req, res) => {
         const newUser  = await User.createUser ({ 
             name, 
             email, 
-            password: hashedPassword // Use hashed password
+            password: hashedPassword 
         });
 
         // Remove sensitive information before sending response
         const { password: userPassword, ...userResponse } = newUser ;
 
+        // Generate JWT token
+        const token = jwt.sign({ id: newUser .id, email: newUser .email }, JWT_SECRET, { expiresIn: '1h' });
+
         res.status(201).json({
             message: 'User  created successfully',
-            user: userResponse
+            user: userResponse,
+            token // Send the token in the response
         });
     } catch (error) {
         console.error('Signup error:', error);
@@ -49,9 +56,16 @@ authRouter.post('/signup', async (req, res) => {
 });
 
 // Login Route
-authRouter.post('/login', async (req, res) => {
+authRouter.post('/signin', async (req, res) => {
     try {
         const { email, password } = req.body;
+
+        // Validate input
+        if (!email || !password) {
+            return res.status(400).json({ 
+                message: 'Email and password are required' 
+            });
+        }
 
         // Find user by email
         const user = await User.findByEmail(email);
@@ -61,7 +75,7 @@ authRouter.post('/login', async (req, res) => {
             });
         }
 
-        // Check password
+        // Compare the password
         const isMatch = await bcryptjs.compare(password, user.password);
         if (!isMatch) {
             return res.status(401).json({ 
@@ -72,14 +86,18 @@ authRouter.post('/login', async (req, res) => {
         // Remove sensitive information before sending response
         const { password: userPassword, ...userResponse } = user;
 
+        // Generate JWT token
+        const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
+
         res.status(200).json({
-            message: 'Login successful',
-            user: userResponse
+            message: 'Signin successful',
+            user: userResponse,
+            token // Send the token in the response
         });
     } catch (error) {
-        console.error('Login error:', error);
+        console.error('Signin error:', error);
         res.status(500).json({ 
-            message: 'Server error during login' 
+            message: 'Server error during signin' 
         });
     }
 });

@@ -19,7 +19,7 @@ app.use('/auth', authRouter);
 
 async function startServer() {
     try {
-        
+         await prisma.$connect();
         console.log('Database connection successful');
 
         
