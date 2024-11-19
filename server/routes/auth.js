@@ -4,7 +4,7 @@ const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const authRouter = express.Router();
-const JWT_SECRET = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJrZXlhZXVnZW5lQGdtYWlsLmNvbSIsImlhdCI6MTczMjAxMzE5NiwiZXhwIjoxNzMyMDE2Nzk2fQ.utXWSC14FNBiCJ820LtBcqUJZY6nRLqn53SIB3hW-mw"; 
+const JWT_SECRET = process.env.JWT_SECRET || '';
 
 // Signup Route
 authRouter.post('/auth/signup', async (req, res) => {
