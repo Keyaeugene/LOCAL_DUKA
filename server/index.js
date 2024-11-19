@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
-app.use('/auth', authRouter);
+app.use(authRouter);
 
 
 async function startServer() {

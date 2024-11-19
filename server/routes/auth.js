@@ -4,10 +4,10 @@ const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const authRouter = express.Router();
-const JWT_SECRET = 'your_jwt_secret'; 
+const JWT_SECRET = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJrZXlhZXVnZW5lQGdtYWlsLmNvbSIsImlhdCI6MTczMjAxMzE5NiwiZXhwIjoxNzMyMDE2Nzk2fQ.utXWSC14FNBiCJ820LtBcqUJZY6nRLqn53SIB3hW-mw"; 
 
 // Signup Route
-authRouter.post('/signup', async (req, res) => {
+authRouter.post('/auth/signup', async (req, res) => {
     try {
         const { name, email, password } = req.body;
 
@@ -45,7 +45,7 @@ authRouter.post('/signup', async (req, res) => {
         res.status(201).json({
             message: 'User  created successfully',
             user: userResponse,
-            token // Send the token in the response
+            token 
         });
     } catch (error) {
         console.error('Signup error:', error);
@@ -55,8 +55,8 @@ authRouter.post('/signup', async (req, res) => {
     }
 });
 
-// Login Route
-authRouter.post('/signin', async (req, res) => {
+// Sign in  Route
+authRouter.post('/auth/signin', async (req, res) => {
     try {
         const { email, password } = req.body;
 
@@ -92,7 +92,7 @@ authRouter.post('/signin', async (req, res) => {
         res.status(200).json({
             message: 'Signin successful',
             user: userResponse,
-            token // Send the token in the response
+            token 
         });
     } catch (error) {
         console.error('Signin error:', error);

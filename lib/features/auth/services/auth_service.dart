@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/constants/error_handling.dart';
 import 'package:flutter_e_commerce/constants/global_variables.dart';
@@ -25,7 +27,7 @@ class AuthService {
       );
 
       http.Response res = await http.post(
-        Uri.parse('$uri/api/signup'),
+        Uri.parse('$uri/auth/signup'),
         body: user.toJson(),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
@@ -38,6 +40,35 @@ class AuthService {
           showSnackBar(
               context, 'Account created!,Login with the same credentials.');
         },
+      );
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
+
+  // sign in user
+  void signInUser({
+    required BuildContext context,
+    required String email,
+    required String password,
+  }) async {
+    try {
+      http.Response res = await http.post(
+        Uri.parse('$uri/auth/signin'),
+        body: jsonEncode({
+          'email': email,
+          'password': password,
+        }),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+
+      print(res.body);
+      httpErrorHandle(
+        response: res,
+        context: context,
+        onSuccess: () {},
       );
     } catch (e) {
       showSnackBar(context, e.toString());
