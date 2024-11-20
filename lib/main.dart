@@ -2,9 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/constants/global_variables.dart';
 import 'package:flutter_e_commerce/features/auth/screens/auth_screen.dart';
 import 'package:flutter_e_commerce/router.dart';
+import 'package:provider/provider.dart';
+
+import 'provider/user_provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => UserProvider(),
+        ),
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -15,7 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Amazon clone',
+      title: 'Local Duka',
       theme: ThemeData(
         scaffoldBackgroundColor: GlobalVariables.backgroundColor,
         colorScheme: const ColorScheme.light(

@@ -1,11 +1,14 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/constants/error_handling.dart';
 import 'package:flutter_e_commerce/constants/global_variables.dart';
 import 'package:flutter_e_commerce/constants/utilis.dart';
+import 'package:flutter_e_commerce/features/auth/home/screens/home_screen.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../models/user.dart';
+import '../../../provider/user_provider.dart';
 
 class AuthService {
   //sign up userr
@@ -64,11 +67,19 @@ class AuthService {
         },
       );
 
-      print(res.body);
       httpErrorHandle(
         response: res,
         context: context,
-        onSuccess: () {},
+        onSuccess: () async {
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          Provider.of<UserProvider>(context, listen: false).setUSer(res.body);
+          await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            HomeScreen.routeName,
+            (route) => false,
+          );
+        },
       );
     } catch (e) {
       showSnackBar(context, e.toString());
