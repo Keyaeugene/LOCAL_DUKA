@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/constants/global_variables.dart';
+import 'package:flutter_e_commerce/features/auth/home/screens/home_screen.dart';
 import 'package:flutter_e_commerce/features/auth/screens/auth_screen.dart';
+import 'package:flutter_e_commerce/features/auth/services/auth_service.dart';
 import 'package:flutter_e_commerce/router.dart';
 import 'package:provider/provider.dart';
 
@@ -19,8 +21,21 @@ void main() {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final AuthService authService = AuthService();
+
+  @override
+  void initState() {
+    super.initState();
+    authService.getUserData(context);
+  }
 
   // This widget is the root of your application.
   @override
@@ -40,7 +55,9 @@ class MyApp extends StatelessWidget {
             )),
       ),
       onGenerateRoute: (settings) => generateRoute(settings),
-      home: const AuthScreen(),
+      home: Provider.of<UserProvider>(context).user.token.isNotEmpty
+          ? const HomeScreen()
+          : const AuthScreen(),
     );
   }
 }
