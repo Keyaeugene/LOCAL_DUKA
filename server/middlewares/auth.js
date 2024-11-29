@@ -11,9 +11,9 @@ if(!token)
         req.user = verified.id;
         req.token = token;
         next();
-    } catch (err) { 
+    } catch (err) {     
         res.status(500).json({error: err.message});
     }
 };
 
-module.exports = auth;
+module.exports = auth; 
