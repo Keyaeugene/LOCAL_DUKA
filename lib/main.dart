@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/constants/global_variables.dart';
-import 'package:flutter_e_commerce/features/auth/home/screens/home_screen.dart';
 import 'package:flutter_e_commerce/features/auth/screens/auth_screen.dart';
 import 'package:flutter_e_commerce/features/auth/services/auth_service.dart';
 import 'package:flutter_e_commerce/router.dart';
 import 'package:provider/provider.dart';
 
+import 'common/bottom_bar.dart';
 import 'provider/user_provider.dart';
 
 void main() {
@@ -56,7 +56,7 @@ class _MyAppState extends State<MyApp> {
       ),
       onGenerateRoute: (settings) => generateRoute(settings),
       home: Provider.of<UserProvider>(context).user.token.isNotEmpty
-          ? const HomeScreen()
+          ? const BottomBar()
           : const AuthScreen(),
     );
   }

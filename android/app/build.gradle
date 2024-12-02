@@ -10,12 +10,12 @@ android {
     ndkVersion flutter.ndkVersion
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_22
-        targetCompatibility JavaVersion.VERSION_22
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
     }
 
     kotlinOptions {
-        jvmTarget = "22"
+        jvmTarget = "21"
     }
 
     defaultConfig {
@@ -30,13 +30,7 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.debug
-            minifyEnabled true // Enable code shrinking for release
-            shrinkResources true // Enable resource shrinking for release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
-        }
-        debug {
-            minifyEnabled false // Keep code shrinking disabled for debug
-            shrinkResources false // Disable resource shrinking for debug
         }
     }
 }
