@@ -71,6 +71,7 @@ authRouter.post('/signin', async (req, res) => {
         
         const user = await User.findByEmail(email);
         if (!user) {
+            console.log('User not found for email:', email);
             return res.status(401).json({ 
                 message: 'Invalid email or password' 
             });

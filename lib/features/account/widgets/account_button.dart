@@ -11,6 +11,7 @@ class AccountButton extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(color: Colors.white, width: 0.0),
         borderRadius: BorderRadius.circular(50),
+        color: Colors.white,
       ),
     );
   }
