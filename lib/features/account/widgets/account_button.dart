@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class AccountButton extends StatelessWidget {
-  const AccountButton({super.key});
+  final String text;
+  final VoidCallback onTap;
+  const AccountButton({required this.text, required this.onTap, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,6 +14,16 @@ class AccountButton extends StatelessWidget {
         border: Border.all(color: Colors.white, width: 0.0),
         borderRadius: BorderRadius.circular(50),
         color: Colors.white,
+      ),
+      child: OutlinedButton(
+        onPressed: onTap,
+        child: Text(
+          text,
+          style: const TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.normal,
+          ),
+        ),
       ),
     );
   }
