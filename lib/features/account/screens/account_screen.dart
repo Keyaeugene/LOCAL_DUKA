@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/features/account/widgets/below_app_bar.dart';
+import 'package:flutter_e_commerce/features/account/widgets/orders.dart';
 import 'package:flutter_e_commerce/features/account/widgets/top_buttons.dart';
 import '../../../constants/global_variables.dart';
 
@@ -51,6 +52,8 @@ class AccountScreen extends StatelessWidget {
           BelowAppBar(),
           SizedBox(height: 10),
           TopButtons(),
+          SizedBox(height: 20),
+          Orders()
         ],
       ),
     );
