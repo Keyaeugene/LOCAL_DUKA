@@ -12,7 +12,7 @@ class UserModel {
             where: { email }
         })
     }
-
+ 
     async createUser(userData) {
         if (!userData.name || !userData.email || !userData.password) {
             throw new Error('Name, email, and password are required')

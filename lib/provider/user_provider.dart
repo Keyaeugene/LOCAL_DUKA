@@ -13,8 +13,12 @@ class UserProvider extends ChangeNotifier {
   );
   User get user => _user;
 
-  void setUSer(String user) {
-    _user = User.fromJson(user);
-    notifyListeners();
+  void setUSer(String userJson) {
+    try {
+      _user = User.fromJson(userJson);
+      notifyListeners();
+    } catch (e) {
+      print('Eror setting user: $e');
+    }
   }
 }

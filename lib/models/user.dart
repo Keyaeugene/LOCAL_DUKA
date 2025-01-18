@@ -10,22 +10,27 @@ class User {
   final String token;
 
   User({
-    required this.id,
+    String? id,
     required this.name,
     required this.email,
     required this.password,
-    required this.address,
-    required this.type,
-    required this.token,
-  });
+    String? address,
+    String? type,
+    String? token,
+  })  : id = id ?? '',
+        address = address ?? '',
+        type = type ?? '',
+        token = token ?? '';
 
   Map<String, dynamic> toMap() {
     return {
       'id': id,
       'name': name,
+      'email': email,
       'password': password,
       'address': address,
       'type': type,
+      'token': token,
     };
   }
 
@@ -41,7 +46,21 @@ class User {
     );
   }
 
+  // Ensure JSON conversion handles potential null values
   String toJson() => json.encode(toMap());
 
-  factory User.fromJson(String source) => User.fromMap(json.decode(source));
+  // Robust JSON parsing
+  factory User.fromJson(String source) {
+    try {
+      return User.fromMap(json.decode(source));
+    } catch (e) {
+      print('Error parsing user JSON: $e');
+
+      return User(
+        name: '',
+        email: '',
+        password: '',
+      );
+    }
+  }
 }

@@ -61,43 +61,46 @@ authRouter.post('/signin', async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        
+       
         if (!email || !password) {
-            return res.status(400).json({ 
-                message: 'Email and password are required' 
+            return res.status(400).json({
+                message: 'Email and password are required'
             });
         }
 
-        
+  
         const user = await User.findByEmail(email);
         if (!user) {
             console.log('User not found for email:', email);
-            return res.status(401).json({ 
-                message: 'Invalid email or password' 
+            return res.status(401).json({
+                message: 'Invalid email '  
             });
         }
 
+      
+
+      
         const isMatch = await bcryptjs.compare(password, user.password);
+
         if (!isMatch) {
-            return res.status(401).json({ 
-                message: 'Invalid email or password' 
+            return res.status(401).json({
+                message: 'Invalid password'  
             });
         }
 
-        
         const { password: userPassword, ...userResponse } = user;
 
-        
+      
         const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
         res.status(200).json({
             message: 'Signin successful',
             user: userResponse,
-            token 
+            token
         });
     } catch (error) {
         console.error('Signin error:', error);
-        res.status(500).json({ 
-            message: 'Server error during signin' 
+        res.status(500).json({
+            message: 'Server error during signin'
         });
     }
 });

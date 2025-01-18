@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../constants/global_variables.dart';
+import 'single_product.dart';
 
 class Orders extends StatefulWidget {
   const Orders({super.key});
@@ -54,8 +55,13 @@ class _OrdersState extends State<Orders> {
           height: 170,
           padding: const EdgeInsets.only(left: 10, top: 20, right: 0),
           child: ListView.builder(
-            itemCount: 3,
-            itemBuilder: (context, index) {},
+            scrollDirection: Axis.horizontal,
+            itemCount: list.length,
+            itemBuilder: (context, index) {
+              return SingleProduct(
+                image: list[index],
+              );
+            },
           ),
         ),
       ],

@@ -1,4 +1,6 @@
 const jwt = require('jsonwebtoken');
+const JWT_SECRET = process.env.JWT_SECRET || '';
+
 const auth = async (req, res, next) => { 
     try { 
 const token = req.header('x-auth-token');
