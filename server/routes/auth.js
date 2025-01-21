@@ -52,11 +52,8 @@ authRouter.post('/signin', async (req, res) => {
             return res.status(401).json({ message: 'User with this email does not exist' });
         }
 
-        console.log('Entered Password:', password);
-        console.log('Stored Hashed Password:', user.password);
-
         const isMatch = await bcryptjs.compare(password, user.password);
-        console.log('Password Match Result:', isMatch);
+       
 
         if (!isMatch) {
             return res.status(401).json({ message: 'Incorrect Password' });
