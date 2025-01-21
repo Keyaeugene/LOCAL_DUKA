@@ -7,12 +7,18 @@ class UserModel {
         return emailRegex.test(email)
     }
 
-    async findByEmail(email) {
-        return await prisma.user.findUnique({   
-            where: { email }
-        })
-    }
+    // async findByEmail(email) {
+    //     return await prisma.user.findUnique({   
+    //         where: { email }
+    //     })
+    // }
  
+    async findByEmail(email) {
+        return await prisma.user.findFirst({   
+            where: { email: { equals: email, mode: 'insensitive' } }
+        });
+    }
+    
     async createUser(userData) {
         if (!userData.name || !userData.email || !userData.password) {
             throw new Error('Name, email, and password are required')
@@ -43,7 +49,7 @@ class UserModel {
                 }
             })
         } catch (error) {
-            if (error.code === 'P2002') { // Prisma unique constraint violation
+            if (error.code === 'P2002') { 
                 throw new Error('Email already exists')
             }
             throw error
