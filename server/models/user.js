@@ -8,9 +8,31 @@ class UserModel {
     }
 
     async findByEmail(email) {
-        return await prisma.user.findUnique({   
-            where: { email }
-        })
+        return await prisma.user.findUnique({
+            where: { email },
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                password: true,
+                address: true,
+                type: true,
+            },
+        });
+    }
+
+    async findById(id) {
+        return await prisma.user.findUnique({
+            where: { id },
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                password: true,
+                address: true,
+                type: true,
+            },
+        });
     }
  
     async createUser(userData) {
@@ -22,7 +44,7 @@ class UserModel {
             throw new Error('Invalid email address')
         }
 
-        const saltRounds = 10
+        const saltRounds = 12
         const hashedPassword = await bcryptjs.hash(userData.password, saltRounds)
 
         try {
@@ -43,7 +65,7 @@ class UserModel {
                 }
             })
         } catch (error) {
-            if (error.code === 'P2002') { // Prisma unique constraint violation
+            if (error.code === 'P2002') {
                 throw new Error('Email already exists')
             }
             throw error
