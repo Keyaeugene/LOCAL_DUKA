@@ -27,13 +27,13 @@ authRouter.post('/signup', async (req, res) => {
 
         const newUser = await User.createUser({ name, email, password });
 
-        const { password: userPassword, ...userResponse } = newUser;
+     
 
         const token = jwt.sign({ id: newUser.id, email: newUser.email }, JWT_SECRET, { expiresIn: '1h' });
 
         res.status(201).json({
             message: 'Account created successfully',
-            user: userResponse,
+            user: newUser,
             token
         });
     } catch (error) {
