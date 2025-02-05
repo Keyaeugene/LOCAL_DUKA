@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_e_commerce/provider/user_provider.dart';
 import 'package:provider/provider.dart';
+import '../../../provider/user_provider.dart';
 
 class AddressBox extends StatelessWidget {
   const AddressBox({super.key});
