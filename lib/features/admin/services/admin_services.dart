@@ -15,7 +15,7 @@ class AdminServices {
     required List<File> images,
   }) async {
     try {
-      final cloudinary = CloudinaryPublic('', '');
+      final cloudinary = CloudinaryPublic('');
       List<String> imageUrls = [];
 
       for (int i = 0; i < images.length; i++) {
