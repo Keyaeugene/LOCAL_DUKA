@@ -3,6 +3,7 @@ const User = require('./models/user');
 const authRouter = require("./routes/auth");
 const cors = require('cors');
 const prisma = require('./lib/prisma');
+const adminRouter = require('./routes/admin');
 
 
 const app = express();
@@ -12,6 +13,7 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json()); 
 app.use(express.urlencoded({ extended: true }));
+app.use(adminRouter);
 
 
 app.use('/auth',authRouter);

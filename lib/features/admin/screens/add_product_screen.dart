@@ -5,6 +5,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/common/widgets/custom_button.dart';
 import 'package:flutter_e_commerce/common/widgets/custom_textfield.dart';
+import 'package:flutter_e_commerce/features/admin/services/admin_services.dart';
 
 import '../../../constants/global_variables.dart';
 import '../../../constants/utilis.dart';
@@ -19,19 +20,20 @@ class AddProductScreen extends StatefulWidget {
 
 class _AddProductScreenState extends State<AddProductScreen> {
   final TextEditingController productNameController = TextEditingController();
-  final TextEditingController descriptionNameController =
-      TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
   final TextEditingController quantityController = TextEditingController();
+  final AdminServices adminServices = AdminServices();
 
   String category = 'Mobiles';
   List<File> images = [];
+  final _addProductFormKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
     super.dispose();
     productNameController.dispose();
-    descriptionNameController.dispose();
+    descriptionController.dispose();
     priceController.dispose();
     quantityController.dispose();
   }
@@ -43,6 +45,20 @@ class _AddProductScreenState extends State<AddProductScreen> {
     'Books',
     'Fashion',
   ];
+
+  void sellProduct() {
+    if (_addProductFormKey.currentState!.validate() && images.isNotEmpty) {
+      adminServices.sellProduct(
+        context: context,
+        name: productNameController.text,
+        description: descriptionController.text,
+        price: double.parse(priceController.text),
+        quantity: double.parse(quantityController.text),
+        category: category,
+        images: images,
+      );
+    }
+  }
 
   void selectImages() async {
     var res = await pickImages();
@@ -72,6 +88,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
       ),
       body: SingleChildScrollView(
         child: Form(
+          key: _addProductFormKey,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: Column(
@@ -134,7 +151,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 ),
                 const SizedBox(height: 10),
                 CustomTextfield(
-                  controller: descriptionNameController,
+                  controller: descriptionController,
                   hintText: 'Description',
                   maxLines: 7,
                 ),
@@ -169,7 +186,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 const SizedBox(height: 10),
                 CustomButton(
                   text: 'Sell',
-                  onTap: () {},
+                  onTap: sellProduct,
                 ),
               ],
             ),

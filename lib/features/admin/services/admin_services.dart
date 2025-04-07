@@ -2,11 +2,11 @@ import 'dart:io';
 import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_e_commerce/constants/error_handling.dart';
+import 'package:flutter_e_commerce/constants/global_variables.dart';
 import 'package:flutter_e_commerce/constants/utilis.dart';
 import 'package:flutter_e_commerce/models/product.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-import '../../../constants/global_variables.dart';
 import '../../../provider/user_provider.dart';
 
 class AdminServices {
