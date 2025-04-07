@@ -18,3 +18,18 @@ model User {
 
   @@map("users")
 }
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  description String
+  images      String[] // Array of strings for PostgreSQL
+  quantity    Int
+  price       Float    // Using Float instead of Number for PostgreSQL
+  category    String
+  ratings     Rating[] // Relation to Rating model
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("products")
+}
