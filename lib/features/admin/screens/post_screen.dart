@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_e_commerce/features/admin/services/admin_services.dart';
 
 import 'add_product_screen.dart';
 
@@ -10,6 +11,15 @@ class PostScreen extends StatefulWidget {
 }
 
 class _PostScreenState extends State<PostScreen> {
+  final AdminServices adminServices = AdminServices();
+
+  @override
+  void initState() {
+    super.initState();
+    fetchAllProducts();
+  }
+
+  fetchAllProducts() async {}
   void navigatetoAddProduct() {
     Navigator.pushNamed(context, AddProductScreen.routeName);
   }
