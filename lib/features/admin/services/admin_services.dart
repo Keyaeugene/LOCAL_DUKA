@@ -91,4 +91,10 @@ class AdminServices {
     }
     return productList;
   }
+
+  void deleteProduct({
+    required BuildContext context,
+    required Product product,
+    required VoidCallback onSuccess,
+  }) {}
 }

@@ -38,6 +38,7 @@ class _PostScreenState extends State<PostScreen> {
         ? const Loader()
         : Scaffold(
             body: GridView.builder(
+                itemCount: products!.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2),
                 itemBuilder: (context, index) {
@@ -58,7 +59,12 @@ class _PostScreenState extends State<PostScreen> {
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,
                           ),
-                        )
+                        ),
+                        IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.delete_outline,
+                            )),
                       ],
                     )
                   ]);
